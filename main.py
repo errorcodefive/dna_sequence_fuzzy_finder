@@ -2,6 +2,7 @@ import numpy as np
 import configparser
 import time
 from collections import deque
+import csv
 
 # List of .fasta files to go through, I have them named chr1-22, chrx, chry
 # Files must be placed in same directory as main.py
@@ -13,6 +14,7 @@ chr_list = ["test"
 config = configparser.ConfigParser()
 config.read('config.ini')
 seq=config['DEFAULT']['sequence']
+antiseq=config['DEFAULT']['anti_sequence']
 surround_len=int(config['DEFAULT']['surround_length'])
 
 print ("Sequence: " + seq +". Len: " + str(surround_len))
@@ -37,9 +39,11 @@ for chr in chr_list:
         line_combined = ""
         total_char = 0
         line_num_char = 0
+        line_num =0
         full_pop_size = len(seq)+surround_len*2
         frame_queue = deque([])
         for new_line in infile:
+            line_num+=1
             for nuc in new_line.strip():
                 total_char +=1
                 # If frame_queue is not fully populated
@@ -61,8 +65,15 @@ for chr in chr_list:
                         else:
                             seq_match = False
                         if(seq_pos==len(seq)):
-                            print("Sequence found at " + str(total_char-surround_len+2-len(seq))+ ".")
+                            print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(seq))+ ".")
                             seq_match = False
+                            # Output position, sense/antisense, chromosome (aka file name), sequence
+                            output_seq = ""
+                            for j in range(-surround_len, surround_len):
+                                output_seq=output_seq+frame_queue[frame_pos+j]
+                            with open('output.csv', mode='a') as output_file:
+                                output_writer = csv.writer(output_file, delimiter=',')
+                                output_writer.writerow([(total_char-surround_len-len(seq)), 'sense', chr, output_seq])
                             #Save position and surrounding sequences
         print("Finished and process " + str(total_char) + " nucleotides.")
 # Iterate through every nucleotide and location for sequence
