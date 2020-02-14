@@ -21,7 +21,7 @@ with open("found_sequence_anti.csv")  as infile:
             seq_complement=""
             for nuc in seq_reversed:
                 seq_complement+=nucleotide_complements[nuc]
-            with open('found_sequence_anti_fixed.csv', mode='a') as output_file:
+            with open('found_sequence_anti_fixed.csv', mode='a', newline='') as output_file:
                 output_writer = csv.writer(output_file, delimiter = ',')
                 output_writer.writerow([row[0], row[1], row[2], seq_complement])
         except IndexError:
