@@ -5,7 +5,7 @@ from collections import deque
 import csv
 # This file will read from config.ini and take the sense, antisense and surrounding nucleotide length
 # This file will output all found locations of the sense and antisense series along with the file/chromosome name
-# This file will APPEND all found data so make sure there does "found_sequence.csv" does not already exist
+# This file will APPEND all found data so make sure there does "found_sequence_sense.csv" and "found_sequence_antisense.csv" does not already exist
 
 # List of .fasta files to go through, I have them named chr1-22, chrx, chry
 # Files must be placed in same directory as main.py
@@ -76,7 +76,7 @@ for chr in chr_list:
                             output_seq = ""
                             for j in range(-surround_len, surround_len):
                                 output_seq=output_seq+frame_queue[frame_pos+j]
-                            with open('found_sequence.csv', mode='a') as output_file:
+                            with open('found_sequence_anti.csv', mode='a') as output_file:
                                 output_writer = csv.writer(output_file, delimiter=',')
                                 output_writer.writerow([(total_char-surround_len-len(seq)), 'antisense', chr, output_seq.strip()])
                             #Save position and surrounding sequences    
