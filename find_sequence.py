@@ -3,9 +3,13 @@ import configparser
 import time
 from collections import deque
 import csv
+# This file will read from config.ini and take the sense, antisense and surrounding nucleotide length
+# This file will output all found locations of the sense and antisense series along with the file/chromosome name
+# This file will APPEND all found data so make sure there does "found_sequence.csv" does not already exist
 
 # List of .fasta files to go through, I have them named chr1-22, chrx, chry
 # Files must be placed in same directory as main.py
+
 chr_list = ["test"
     ]
 # Only loading 2 chromosomes during testing
@@ -54,6 +58,28 @@ for chr in chr_list:
                     frame_queue.popleft()
                     # Check for seq
                     seq_match=True
+                    anti_seq_match=True
+                    frame_pos = int(surround_len)
+                    anti_seq_pos=0
+                    while anti_seq_match==True:
+                        #Look at specific position
+                        if frame_queue[frame_pos] == antiseq[anti_seq_pos]:
+                            anti_seq_match = True
+                            anti_seq_pos+=1
+                            frame_pos+=1
+                        else:
+                            seq_match = False
+                        if(anti_seq_pos==len(antiseq)):
+                            print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(antiseq))+ ".")
+                            anti_seq_match = False
+                            # Output position, sense/antisense, chromosome (aka file name), sequence
+                            output_seq = ""
+                            for j in range(-surround_len, surround_len):
+                                output_seq=output_seq+frame_queue[frame_pos+j]
+                            with open('found_sequence.csv', mode='a') as output_file:
+                                output_writer = csv.writer(output_file, delimiter=',')
+                                output_writer.writerow([(total_char-surround_len-len(seq)), 'antisense', chr, output_seq.strip()])
+                            #Save position and surrounding sequences    
                     frame_pos = int(surround_len)
                     seq_pos = 0
                     while seq_match == True:
@@ -71,11 +97,11 @@ for chr in chr_list:
                             output_seq = ""
                             for j in range(-surround_len, surround_len):
                                 output_seq=output_seq+frame_queue[frame_pos+j]
-                            with open('output.csv', mode='a') as output_file:
+                            with open('found_sequence.csv', mode='a') as output_file:
                                 output_writer = csv.writer(output_file, delimiter=',')
-                                output_writer.writerow([(total_char-surround_len-len(seq)), 'sense', chr, output_seq])
+                                output_writer.writerow([(total_char-surround_len-len(seq)), 'sense', chr, output_seq.strip()])
                             #Save position and surrounding sequences
-        print("Finished and process " + str(total_char) + " nucleotides.")
+        print("Finished and processed " + str(total_char) + " nucleotides.")
 # Iterate through every nucleotide and location for sequence
 
 # If sequence is found then note: location, chromosome, +- 50nt sequence
