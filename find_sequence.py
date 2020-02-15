@@ -78,7 +78,7 @@ for chr in chr_list:
                                 output_seq=output_seq+frame_queue[frame_pos+j]
                             with open('found_sequence_anti.csv', mode='a', newline='') as output_file:
                                 output_writer = csv.writer(output_file, delimiter=',')
-                                output_writer.writerow([(total_char-surround_len-len(seq)), 'antisense', chr, output_seq.strip()])
+                                output_writer.writerow([(total_char-surround_len-len(seq)+line_num-2), 'antisense', chr, output_seq.strip()])
                             #Save position and surrounding sequences    
                     frame_pos = int(surround_len)
                     seq_pos = 0
@@ -99,7 +99,7 @@ for chr in chr_list:
                                 output_seq=output_seq+frame_queue[frame_pos+j]
                             with open('found_sequence.csv', mode='a', newline='') as output_file:
                                 output_writer = csv.writer(output_file, delimiter=',')
-                                output_writer.writerow([(total_char-surround_len-len(seq)), 'sense', chr, output_seq.strip()])
+                                output_writer.writerow([(total_char-surround_len-len(seq)+line_num-2), 'sense', chr, output_seq.strip()])
                             #Save position and surrounding sequences
         print("Finished and processed " + str(total_char) + " nucleotides.")
 # Iterate through every nucleotide and location for sequence
