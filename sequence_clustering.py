@@ -21,4 +21,5 @@ with open('found_sequences.csv') as csv_file:
         # Ignore all columns except for 3 (sequence)
         cropped_input = row[3][:surround_len]+row[3][surround_len+seq_length:]
         # For each line that is read in delete the middle portion (the sequence)
+        print(cropped_input)
         # Load each line into a np array as a series of chars eg [[a,t,g,c],[g,t,c,a]]

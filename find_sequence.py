@@ -68,7 +68,7 @@ for chr in chr_list:
                             anti_seq_pos+=1
                             frame_pos+=1
                         else:
-                            seq_match = False
+                            anti_seq_match = False
                         if(anti_seq_pos==len(antiseq)):
                             print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(antiseq))+ ".")
                             anti_seq_match = False
