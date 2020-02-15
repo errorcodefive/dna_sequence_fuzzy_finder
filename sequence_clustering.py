@@ -4,6 +4,16 @@ import numpy as np
 import skfuzzy as fuzz
 import csv
 import configparser
+from scipy.cluster import hierarchy
+import matplotlib.pyplot as plt
+
+nucleotide_conversions = {
+    "A":1,
+    "T":2,
+    "G":3,
+    "C":4,
+    "N":5
+}
 
 # Read config.ini and read sequence and get length
 # Read config.ini and get surrounding length
@@ -11,9 +21,10 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 seq_length=len(config['DEFAULT']['sequence'])
 surround_len=int(config['DEFAULT']['surround_length'])
-
-read_data = []
+f=lambda x: nucleotide_conversions[x]
+f_vector = np.vectorize(f)
 # Read in file from found_sequence.csv
+read_data=np.zeros(surround_len*2-seq_length)
 with open('found_sequence.csv') as csv_file:
 
     csv_reader = csv.reader(csv_file, delimiter = ',')
@@ -23,6 +34,11 @@ with open('found_sequence.csv') as csv_file:
         # For each line that is read in delete the middle portion (the sequence)
         # Load each line into a np array as a series of chars eg [[a,t,g,c],[g,t,c,a]]
         line_np = np.array(list(cropped_input))
-        read_data.append(line_np)
-np_data = np.array(read_data)
-print(np_data)
+        line_converted = f_vector(line_np)
+        print(line_converted)
+        read_data = np.vstack([read_data, line_converted])
+
+Z = hierarchy.linkage(read_data,method='single', metric='hamming')
+fig=plt.figure()
+dn=hierarchy.dendrogram(Z)
+plt.show()
