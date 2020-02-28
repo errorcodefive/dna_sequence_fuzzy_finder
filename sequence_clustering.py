@@ -6,7 +6,7 @@ import csv
 import configparser
 from scipy.cluster import hierarchy
 import matplotlib.pyplot as plt
-
+import time
 nucleotide_conversions = {
     "A":1,
     "T":2,
@@ -25,6 +25,7 @@ f=lambda x: nucleotide_conversions[x]
 f_vector = np.vectorize(f)
 # Read in file from found_sequence.csv
 read_data=np.zeros(surround_len*2-seq_length)
+start_time = time.time()
 with open('found_sequence.csv') as csv_file:
 
     csv_reader = csv.reader(csv_file, delimiter = ',')
@@ -34,11 +35,14 @@ with open('found_sequence.csv') as csv_file:
         # For each line that is read in delete the middle portion (the sequence)
         # Load each line into a np array as a series of chars eg [[a,t,g,c],[g,t,c,a]]
         line_np = np.array(list(cropped_input))
-        line_converted = f_vector(line_np)
-        print(line_converted)
-        read_data = np.vstack([read_data, line_converted])
 
+        line_converted = f_vector(line_np)
+
+        read_data = np.vstack([read_data, line_converted])
+finish_time = time.time()
+print("Time took: " + str(finish_time-start_time))
 Z = hierarchy.linkage(read_data,method='single', metric='hamming')
+Z.tofile('hierarchy.txt', sep=',')
 fig=plt.figure()
 dn=hierarchy.dendrogram(Z)
 plt.show()

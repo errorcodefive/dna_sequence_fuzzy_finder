@@ -10,7 +10,30 @@ import csv
 # List of .fasta files to go through, I have them named chr1-22, chrx, chry
 # Files must be placed in same directory as main.py
 
-chr_list = ["test"
+chr_list = ["chr1",
+    "chr2",
+    "chr3",
+    "chr4",
+    "chr5",
+    "chr6",
+    "chr7",
+    "chr8",
+    "chr9",
+    "chr10",
+    "chr11",
+    "chr12",
+    "chr13",
+    "chr14",
+    "chr15",
+    "chr16",
+    "chr17",
+    "chr18",
+    "chr19",
+    "chr20",
+    "chr21",
+    "chr22",
+    "chrx",
+    "chry"
     ]
 # Only loading 2 chromosomes during testing
 
@@ -70,7 +93,7 @@ for chr in chr_list:
                         else:
                             anti_seq_match = False
                         if(anti_seq_pos==len(antiseq)):
-                            print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(antiseq))+ ".")
+                            # print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(antiseq))+ ".")
                             anti_seq_match = False
                             # Output position, sense/antisense, chromosome (aka file name), sequence
                             output_seq = ""
@@ -91,7 +114,7 @@ for chr in chr_list:
                         else:
                             seq_match = False
                         if(seq_pos==len(seq)):
-                            print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(seq))+ ".")
+                            #print("Sequence found on line: " + str(line_num)+ ", " + str(total_char-surround_len-len(seq))+ ".")
                             seq_match = False
                             # Output position, sense/antisense, chromosome (aka file name), sequence
                             output_seq = ""
