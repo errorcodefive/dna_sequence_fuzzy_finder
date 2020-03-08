@@ -4,3 +4,4 @@ GRCh38_latest_genomic.gff
 found_sequence_anti_fixed.csv
 found_sequence_anti.csv
 found_sequence.csv
+*.tsv

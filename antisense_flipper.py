@@ -7,7 +7,9 @@ nucleotide_complements = {
     "T":"A",
     "G":"C",
     "C":"G",
-    "N":"N"
+    "N":"N",
+    "Y":"Y",
+    "M":"M"
 }
 
 with open("found_sequence_anti.csv")  as infile:
@@ -17,7 +19,7 @@ with open("found_sequence_anti.csv")  as infile:
         try:
             seq_in = row[3]
             seq_reversed = str(seq_in[::-1])
-            print("Reversed: " + seq_reversed)
+            #print("Reversed: " + seq_reversed)
             seq_complement=""
             for nuc in seq_reversed:
                 seq_complement+=nucleotide_complements[nuc]
