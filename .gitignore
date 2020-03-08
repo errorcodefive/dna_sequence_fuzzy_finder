@@ -1,7 +1,5 @@
 GRCh38_latest_genomic.fna
 GRCh38_latest_genomic.gff
 *.fasta
-found_sequence_anti_fixed.csv
-found_sequence_anti.csv
-found_sequence.csv
 *.tsv
+*.csv
