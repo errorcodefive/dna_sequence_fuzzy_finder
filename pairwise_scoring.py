@@ -18,7 +18,7 @@ eof=False
 # check if readline is empty
 results_dict={}
 output_file=open("pairwise_scoring.csv","a", newline='')
-writer=csv.writer(output_file, delimiter=',')
+writer=csv.writer(output_file, delimiter=',', quoting=csv.QUOTE_NONE)
 
 while (eof == False):
     line=f.readline()
