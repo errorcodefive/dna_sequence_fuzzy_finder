@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+[DEFAULT]
+sequence_file = GRCh38_latest_gemonic
+sequence = GGTCTC
+anti_sequence= GAGACC
+surround_length = 50
+=======
+[DEFAULT]
+sequence_file = GRCh38_latest_gemonic
+sequence = GGTCTC
+anti_sequence= GAGACC
+surround_length = 50
+>>>>>>> e852ca4f7e6b1d586cfcc7306d0858aad1ef87fb
+pairwise_query_sequence=CCCAGTCTCTCAGCTTCCGTTTCTTTCTTAAACTTTCTCTCAGTCTCTGAGGTCTCGAAATCACGAGGCTTCGACCCCTGTGGACCAGATGCCCAGCTAG
